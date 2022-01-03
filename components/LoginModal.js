@@ -15,8 +15,8 @@ const LoginModal = (props) => {
         </form>
 
         <p>
-          Don't have an account yet?{' '}
-          <a href="javascript:;" onClick={() => props.showSignup()}>
+          Don&apos;t have an account yet?
+          <a href="#" onClick={() => props.showSignup()}>
             Sign up
           </a>
         </p>

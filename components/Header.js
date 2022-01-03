@@ -1,8 +1,9 @@
 import Link from 'next/link'
 import { useStoreActions } from 'easy-peasy'
 
-export default function Header(props) {
-  const setShowLoginModal = useStoreActions(
+export default function Header() {
+
+const setShowLoginModal = useStoreActions(
   (actions) => actions.modals.setShowLoginModal
 )
 const setShowRegistrationModal = useStoreActions(
