@@ -1,16 +1,41 @@
+import { useState } from 'react'
 import Header from './Header'
 import Modal from './Modal'
-import { useState } from 'react'
+import LoginModal from './LoginModal'
+import RegistrationModal from './RegistrationModal'
 
 export default function Layout(props) {
   const [showModal, setShowModal] = useState(true)
+  const [showLoginModal, setShowLoginModal] = useState(true)
+  const [showRegistrationModal, setShowRegistrationModal] = useState(false)
 
   return (
     <div>
       <Header />
       <main>{props.content}</main>
       {
-        showModal && <Modal close={() => setShowModal(false)}>test</Modal>
+        showModal && <Modal close={() => setShowModal(false)}>
+          {showLoginModal &&
+            <>
+              <LoginModal
+                showSignup={() => {
+                  setShowRegistrationModal(true)
+                  setShowLoginModal(false)
+                }}
+              />
+            </>
+          }
+          {showRegistrationModal &&
+            <>
+            <RegistrationModal
+              showLogin={() => {
+                setShowRegistrationModal(false)
+                setShowLoginModal(true)
+              }}
+            />
+          </>
+          }
+        </Modal>
       }
       <style jsx>{`
         main {
