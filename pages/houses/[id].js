@@ -44,7 +44,7 @@ export default function House(props) {
           <h2>Choose a date</h2>
             <DateRangePicker
                 datesChanged={(startDate, endDate) => {
-                  console.log('>>> datesChanged', startDate, endDate)
+                  // console.log('>>> datesChanged', startDate, endDate)
                   setNumberOfNightsBetweenDates(
                     calcNumberOfNightsBetweenDates(startDate, endDate)
                   )

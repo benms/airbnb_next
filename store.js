@@ -6,21 +6,21 @@ export default createStore({
     showLoginModal: false,
     showRegistrationModal: false,
     setShowModal: action((state) => {
-      console.log('setShowModal')
+      // console.log('setShowModal')
       state.showModal = true
     }),
     setHideModal: action((state) => {
-      console.log('setHideModal')
+      // console.log('setHideModal')
       state.showModal = false
     }),
     setShowLoginModal: action((state) => {
-      console.log('setShowLoginModal')
+      // console.log('setShowLoginModal')
       state.showModal = true
       state.showLoginModal = true
       state.showRegistrationModal = false
     }),
     setShowRegistrationModal: action((state) => {
-      console.log('setShowRegistrationModal')
+      // console.log('setShowRegistrationModal')
       state.showModal = true
       state.showLoginModal = false
       state.showRegistrationModal = true

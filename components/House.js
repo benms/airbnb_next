@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 export default function House(props) {
-  console.log(props);
+  // console.log(props);
 
   return (
     <Link href="/houses/[id]" as={'/houses/' + props.id}>
