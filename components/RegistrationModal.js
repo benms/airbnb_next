@@ -12,7 +12,7 @@ const RegistrationModal = (props) => {
       password,
       passwordConfirmation
     })
-    // console.log({response})
+    console.log({response})
   }
 
   return (

@@ -1,13 +1,5 @@
-import { User } from '../../../model.js'
-
-const randomString = (length) => {
-  const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-  let result = ''
-  for (let i = length; i > 0; --i) {
-    result += chars[Math.floor(Math.random() * chars.length)]
-  }
-  return result
-}
+import { User } from '../../../model'
+import { randomString } from '../../../helpers'
 
 const registerRequest = async (req, res) => {
   if (req.method !== 'POST') {
@@ -40,10 +32,9 @@ const registerRequest = async (req, res) => {
         },
         { where: { email } }
       )
-      // res.end(JSON.stringify({ status: 'success', message: 'User added' }))
-      res.end(JSON.stringify({ status: 'success', message: 'User added' }))
+      res.json({ status: 'success', message: 'User added' })
     } else {
-      res.end(JSON.stringify({ status: 'error', message: 'User already exists' }))
+      res.json({ status: 'error', message: 'User already exists' })
     }
 
   } catch (err) {
