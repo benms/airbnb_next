@@ -1,6 +1,6 @@
 import { User, sequelize } from '../../../model'
 import { randomString } from '../../../helpers'
-import Cookies from 'cookies'
+import { setSessionToCookies } from '../../../helpers'
 
 
 const Login = async (req, res) => {
@@ -49,11 +49,7 @@ const Login = async (req, res) => {
     )
   }
 
-  const cookies = new Cookies(req, res)
-  cookies.set('nextbnb_session', sessionToken, {
-    httpOnly: true // true by default
-  })
-
+  setSessionToCookies({ req, res, sessionToken })
   res.json({ status: 'success', message: 'Logged in' })
 }
 

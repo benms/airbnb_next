@@ -2,8 +2,9 @@ import Head from 'next/head'
 import houses from '../../houses.js'
 import Layout from '../../components/Layout'
 import DateRangePicker from '../../components/DateRangePicker'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useStoreActions } from 'easy-peasy'
+import { calcNumberOfNightsBetweenDates, getSessionFromCookies } from '../../helpers'
 
 export default function House(props) {
   const setShowLoginModal = useStoreActions(
@@ -12,19 +13,13 @@ export default function House(props) {
 
   const [dateChosen, setDateChosen] = useState(false)
   const [numberOfNightsBetweenDates, setNumberOfNightsBetweenDates] = useState(0)
+  const setLoggedIn = useStoreActions((actions) => actions.login.setLoggedIn)
 
-  const calcNumberOfNightsBetweenDates = (startDate, endDate) => {
-    const start = new Date(startDate) //clone
-    const end = new Date(endDate) //clone
-    let dayCount = 0
-
-    while (end > start) {
-      dayCount++
-      start.setDate(start.getDate() + 1)
+  useEffect(() => {
+    if (props.nextbnb_session) {
+      setLoggedIn(true)
     }
-
-    return dayCount
-  }
+  }, [])
 
   return (
     <Layout
@@ -44,7 +39,6 @@ export default function House(props) {
           <h2>Choose a date</h2>
             <DateRangePicker
                 datesChanged={(startDate, endDate) => {
-                  // console.log('>>> datesChanged', startDate, endDate)
                   setNumberOfNightsBetweenDates(
                     calcNumberOfNightsBetweenDates(startDate, endDate)
                   )
@@ -103,12 +97,13 @@ export default function House(props) {
   )
 }
 
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps({ req, res, query }) {
   const { id } = query
 
   return {
     props: {
-      house: houses.filter((house) => house.id === parseInt(id))[0]
+      house: houses.find((house) => house.id === parseInt(id)),
+      nextbnb_session: getSessionFromCookies({ req, res }) || null
     }
   }
 }
