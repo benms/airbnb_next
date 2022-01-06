@@ -25,7 +25,6 @@ const Login = async (req, res) => {
     return
   }
 
-
   let sessionToken = null
   const sessionExpiration = new Date()
   sessionExpiration.setDate(sessionExpiration.getDate() + 30)

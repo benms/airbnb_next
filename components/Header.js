@@ -11,7 +11,6 @@ const setShowRegistrationModal = useStoreActions(
 )
 
 const loggedIn = useStoreState((state) => state.login.loggedIn)
-// const setLoggedIn = useStoreActions((actions) => actions.login.setLoggedIn)
 
   return (
     <div className="nav-container">

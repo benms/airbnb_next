@@ -1,5 +1,5 @@
 import { User } from '../../../model'
-import { randomString } from '../../../helpers'
+import { randomString, setSessionToCookies } from '../../../helpers'
 
 const registerRequest = async (req, res) => {
   if (req.method !== 'POST') {
@@ -32,6 +32,7 @@ const registerRequest = async (req, res) => {
         },
         { where: { email } }
       )
+      setSessionToCookies({ req, res, sessionToken })
       res.json({ status: 'success', message: 'User added' })
     } else {
       res.json({ status: 'error', message: 'User already exists' })
