@@ -1,15 +1,6 @@
 import { Booking } from '../../../model.js'
 import { Sequelize } from 'sequelize'
-
-const getDatesBetweenDates = (startDate, endDate) => {
-  let dates = []
-  while (startDate < endDate) {
-    dates = [...dates, new Date(startDate)]
-    startDate.setDate(startDate.getDate() + 1)
-  }
-  dates = [...dates, endDate]
-  return dates
-}
+import { getDatesBetweenDates } from '../../../helpers'
 
 const bookedRequest = async (req, res) => {
   if (req.method !== 'POST') {

@@ -26,6 +26,16 @@ const calcNumberOfNightsBetweenDates = (startDate, endDate) => {
   return dayCount
 }
 
+const getDatesBetweenDates = (startDate, endDate) => {
+  let dates = []
+  while (startDate < endDate) {
+    dates = [...dates, new Date(startDate)]
+    startDate.setDate(startDate.getDate() + 1)
+  }
+  dates = [...dates, endDate]
+  return dates
+}
+
 const getSessionFromCookies = ({ req, res }) => {
   const cookies = new Cookies(req, res)
 
@@ -63,4 +73,5 @@ export {
   setSessionToCookies,
   calcNumberOfNightsBetweenDates,
   getBookedDates,
+  getDatesBetweenDates,
 }
