@@ -1,4 +1,5 @@
 import Cookies from 'cookies'
+import axios from 'axios'
 
 const COOKIE_SESSION_NAME='nextbnb_session'
 
@@ -38,9 +39,28 @@ const setSessionToCookies = ({ req, res, sessionToken }) => {
   })
 }
 
+const getBookedDates = async (houseId) => {
+  try {
+    //todo: fix localhost:3000 (wrong port)
+    const response = await axios.post(
+      'http://localhost:3000/api/houses/booked',
+      { houseId }
+    )
+    if (response.data.status === 'error') {
+      alert(response.data.message)
+      return
+    }
+    return response.data.dates
+  } catch (error) {
+    console.error(error)
+    return
+  }
+}
+
 export {
   randomString,
   getSessionFromCookies,
   setSessionToCookies,
   calcNumberOfNightsBetweenDates,
+  getBookedDates,
 }

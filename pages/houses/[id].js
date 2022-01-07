@@ -4,10 +4,14 @@ import Layout from '../../components/Layout'
 import DateRangePicker from '../../components/DateRangePicker'
 import { useState, useEffect } from 'react'
 import { useStoreActions, useStoreState } from 'easy-peasy'
-import { calcNumberOfNightsBetweenDates, getSessionFromCookies } from '../../helpers'
+import {
+  calcNumberOfNightsBetweenDates,
+  getSessionFromCookies,
+  getBookedDates
+} from '../../helpers'
 import { House as HouseModel } from '../../model.js'
 
-export default function House({ house, nextbnb_session }) {
+export default function House({ house, nextbnb_session, bookedDates }) {
   const setShowLoginModal = useStoreActions((actions) => actions.modals.setShowLoginModal)
   const [dateChosen, setDateChosen] = useState(false)
   const [numberOfNightsBetweenDates, setNumberOfNightsBetweenDates] = useState(0)
@@ -65,6 +69,7 @@ export default function House({ house, nextbnb_session }) {
                   setStartDate(startDate)
                   setEndDate(endDate)
                 }}
+                bookedDates={bookedDates}
             />
 
             {
@@ -135,11 +140,13 @@ export default function House({ house, nextbnb_session }) {
 export async function getServerSideProps({ req, res, query }) {
   const { id } = query
   const house = await HouseModel.findByPk(id)
+  const bookedDates = await getBookedDates(id)
 
   return {
     props: {
       house: house.dataValues,
-      nextbnb_session: getSessionFromCookies({ req, res }) || null
+      nextbnb_session: getSessionFromCookies({ req, res }) || null,
+      bookedDates
     }
   }
 }
