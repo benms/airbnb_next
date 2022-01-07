@@ -66,7 +66,7 @@ export default function House(props) {
 
           </aside>
 
-          <style jsx>
+          <style jsx='true'>
             {`
             .container {
               display: grid;

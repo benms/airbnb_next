@@ -30,6 +30,7 @@ User.init(
   {
     sequelize,
     modelName: 'user',
+    tableName: 'next_bnb_users',
     timestamps: false,
     hooks: {
       beforeCreate: async (user) => {
@@ -45,4 +46,28 @@ User.prototype.isPasswordValid = async function (password) {
   return await bcrypt.compare(password, this.password)
 }
 
-export { User, sequelize }
+class House extends Sequelize.Model {}
+
+House.init(
+  {
+    id: {
+      type: Sequelize.DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
+    picture: { type: Sequelize.DataTypes.STRING, allowNull: false },
+    type: { type: Sequelize.DataTypes.STRING, allowNull: false },
+    town: { type: Sequelize.DataTypes.STRING, allowNull: false },
+    title: { type: Sequelize.DataTypes.STRING, allowNull: false },
+    price: { type: Sequelize.DataTypes.INTEGER, allowNull: false },
+    owner: { type: Sequelize.DataTypes.INTEGER, allowNull: false }
+  },
+  {
+    sequelize,
+    modelName: 'house',
+    tableName: 'next_bnb_houses',
+    timestamps: false
+  }
+)
+
+export { User, House, sequelize }
