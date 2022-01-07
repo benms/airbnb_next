@@ -1,12 +1,12 @@
 import Head from 'next/head'
-import houses from '../../houses.js'
 import Layout from '../../components/Layout'
 import DateRangePicker from '../../components/DateRangePicker'
 import { useState, useEffect } from 'react'
 import { useStoreActions } from 'easy-peasy'
 import { calcNumberOfNightsBetweenDates, getSessionFromCookies } from '../../helpers'
+import { House as HouseModel } from '../../model.js'
 
-export default function House(props) {
+export default function House({ house, nextbnb_session }) {
   const setShowLoginModal = useStoreActions(
     (actions) => actions.modals.setShowLoginModal
   )
@@ -16,7 +16,7 @@ export default function House(props) {
   const setLoggedIn = useStoreActions((actions) => actions.login.setLoggedIn)
 
   useEffect(() => {
-    if (props.nextbnb_session) {
+    if (nextbnb_session) {
       setLoggedIn(true)
     }
   }, [])
@@ -26,14 +26,14 @@ export default function House(props) {
       content={
         <div className="container">
           <Head>
-            <title>{props.house.title}</title>
+            <title>{house.title}</title>
           </Head>
           <article>
-            <img src={props.house.picture} width="100%" alt="House picture" />
+            <img src={house.picture} width="100%" alt="House picture" />
             <p>
-              {props.house.type} - {props.house.town}
+              {house.type} - {house.town}
             </p>
-            <p>{props.house.title}</p>
+            <p>{house.title}</p>
           </article>
           <aside>
           <h2>Choose a date</h2>
@@ -50,9 +50,9 @@ export default function House(props) {
               dateChosen && (
                 <div>
                   <h2>Price per night</h2>
-                  <p>${props.house.price}</p>
+                  <p>${house.price}</p>
                   <h2>Total price for booking</h2>
-                  <p>${(numberOfNightsBetweenDates * props.house.price).toFixed(2)}</p>
+                  <p>${(numberOfNightsBetweenDates * house.price).toFixed(2)}</p>
                   <button
                     className="reserve"
                     onClick={() => {
@@ -99,10 +99,11 @@ export default function House(props) {
 
 export async function getServerSideProps({ req, res, query }) {
   const { id } = query
+  const house = await HouseModel.findByPk(id)
 
   return {
     props: {
-      house: houses.find((house) => house.id === parseInt(id)),
+      house: house.dataValues,
       nextbnb_session: getSessionFromCookies({ req, res }) || null
     }
   }

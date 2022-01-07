@@ -1,16 +1,14 @@
 import Link from 'next/link'
 
-export default function House(props) {
-  // console.log(props);
-
+export default function House({ id, type, picture, town, title }) {
   return (
-    <Link href="/houses/[id]" as={'/houses/' + props.id}>
+    <Link href="/houses/[id]" as={'/houses/' + id}>
       <a>
-        <img src={props.picture} width="100%" alt="House picture" />
+        <img src={picture} width="100%" alt="House picture" />
         <p>
-          {props.type} - {props.town}
+          {type} - {town}
         </p>
-        <p>{props.title}</p>
+        <p>{title}</p>
       </a>
     </Link>
   )
