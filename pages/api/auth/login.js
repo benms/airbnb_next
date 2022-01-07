@@ -4,10 +4,6 @@ import { setSessionToCookies } from '../../../helpers'
 
 
 const Login = async (req, res) => {
-  // House.sync()
-  // House.sync({ alter: true })
-  // return res.json({message: 'synced'})
-
   if (req.method !== 'POST') {
     res.status(405).end() //Method Not Allowed
     return

@@ -48,7 +48,7 @@ export default function Home({ nextbnb_session, houses }) {
         }) }
       </div>
 
-      <style jsx>{`
+      <style jsx='true'>{`
         .houses {
           display: grid;
           grid-template-columns: 49% 49%;

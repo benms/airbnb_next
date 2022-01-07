@@ -70,4 +70,48 @@ House.init(
   }
 )
 
-export { User, House, sequelize }
+class Booking extends Sequelize.Model {}
+
+Booking.init(
+  {
+    id: {
+      type: Sequelize.DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
+    houseId: { type: Sequelize.DataTypes.INTEGER, allowNull: false },
+    userId: { type: Sequelize.DataTypes.INTEGER, allowNull: false },
+    startDate: { type: Sequelize.DataTypes.DATEONLY, allowNull: false },
+    endDate: { type: Sequelize.DataTypes.DATEONLY, allowNull: false }
+  },
+  {
+    sequelize,
+    modelName: 'booking',
+    tableName: 'next_bnb_bookings',
+    timestamps: true
+  }
+)
+
+User.sync() //{ alter: true }
+Booking.sync()
+House.sync()
+/* (async function addItems() {
+  await House.create({
+    picture: '/img/1.jpeg',
+    type: 'Entire house',
+    town: 'New York',
+    title: 'Beautiful flat in New York!',
+    price: 150,
+    owner: 1,
+  })
+  await House.create({
+    picture: '/img/1.jpeg',
+    type: 'Entire house',
+    town: 'Amsterdam',
+    title: 'A flat in Amsterdam with a great view',
+    price: 90,
+    owner: 1,
+  })
+})() */
+
+export { User, House, Booking, sequelize }
