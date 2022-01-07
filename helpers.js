@@ -51,7 +51,7 @@ const setSessionToCookies = ({ req, res, sessionToken }) => {
 
 const getBookedDates = async (houseId) => {
   try {
-    //todo: fix localhost:3000 (wrong port)
+    //todo: fix localhost:3000
     const response = await axios.post(
       'http://localhost:3000/api/houses/booked',
       { houseId }
@@ -67,6 +67,26 @@ const getBookedDates = async (houseId) => {
   }
 }
 
+const canReserveHouse = async (houseId, startDate, endDate) => {
+  try {
+     //todo: fix localhost:3000
+    const response = await axios.post(
+      'http://localhost:3000/api/houses/check',
+      { houseId, startDate, endDate }
+    )
+    if (response.data.status === 'error') {
+      alert(response.data.message)
+      return
+    }
+
+    if (response.data.message === 'busy') return false
+    return true
+  } catch (error) {
+    console.error(error)
+    return
+  }
+}
+
 export {
   randomString,
   getSessionFromCookies,
@@ -74,4 +94,5 @@ export {
   calcNumberOfNightsBetweenDates,
   getBookedDates,
   getDatesBetweenDates,
+  canReserveHouse,
 }

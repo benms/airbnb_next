@@ -7,7 +7,8 @@ import { useStoreActions, useStoreState } from 'easy-peasy'
 import {
   calcNumberOfNightsBetweenDates,
   getSessionFromCookies,
-  getBookedDates
+  getBookedDates,
+  canReserveHouse,
 } from '../../helpers'
 import { House as HouseModel } from '../../model.js'
 
@@ -22,6 +23,11 @@ export default function House({ house, nextbnb_session, bookedDates }) {
 
   const handleReserve = async () => {
     try {
+      if (!(await canReserveHouse(house.id, startDate, endDate))) {
+        alert('The dates chosen are not valid')
+        return
+      }
+
       const response = await axios.post('/api/reserve', {
         houseId: house.id,
         startDate,
