@@ -82,7 +82,13 @@ Booking.init(
     houseId: { type: Sequelize.DataTypes.INTEGER, allowNull: false },
     userId: { type: Sequelize.DataTypes.INTEGER, allowNull: false },
     startDate: { type: Sequelize.DataTypes.DATEONLY, allowNull: false },
-    endDate: { type: Sequelize.DataTypes.DATEONLY, allowNull: false }
+    endDate: { type: Sequelize.DataTypes.DATEONLY, allowNull: false },
+    paid: {
+      type: Sequelize.DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false
+    },
+    sessionId: { type: Sequelize.DataTypes.STRING }
   },
   {
     sequelize,
@@ -105,7 +111,7 @@ House.sync()
     owner: 1,
   })
   await House.create({
-    picture: '/img/1.jpeg',
+    picture: '/img/2.jpeg',
     type: 'Entire house',
     town: 'Amsterdam',
     title: 'A flat in Amsterdam with a great view',

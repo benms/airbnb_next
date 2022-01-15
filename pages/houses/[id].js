@@ -28,6 +28,20 @@ export default function House({ house, nextbnb_session, bookedDates }) {
         return
       }
 
+      const sessionResponse = await axios.post('/api/stripe/session', {
+        amount: house.price * numberOfNightsBetweenDates
+      })
+      if (sessionResponse.data.status === 'error') {
+        alert(sessionResponse.data.message)
+        return
+      }
+
+      const sessionId = sessionResponse.data.sessionId
+      const stripePublicKey = sessionResponse.data.stripePublicKey
+
+      const stripe = Stripe(stripePublicKey)
+      const { error } = await stripe.redirectToCheckout({ sessionId })
+
       const response = await axios.post('/api/reserve', {
         houseId: house.id,
         startDate,

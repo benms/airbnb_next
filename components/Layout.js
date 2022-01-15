@@ -3,6 +3,7 @@ import Header from './Header'
 import Modal from './Modal'
 import LoginModal from './LoginModal'
 import RegistrationModal from './RegistrationModal'
+import Head from 'next/head'
 import { useStoreState, useStoreActions } from 'easy-peasy'
 
 export default function Layout(props) {
@@ -22,6 +23,9 @@ export default function Layout(props) {
 
   return (
     <div>
+      <Head>
+        <script src='https://js.stripe.com/v3/'></script>
+      </Head>
       <Header />
       <main>{props.content}</main>
       {
