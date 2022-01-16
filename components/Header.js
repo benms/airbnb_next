@@ -24,6 +24,11 @@ const loggedIn = useStoreState((state) => state.login.loggedIn)
         loggedIn ? (
           <nav>
             <ul>
+            <li>
+                <Link href='/bookings'>
+                  <a>Bookings</a>
+                </Link>
+              </li>
               <li>
                 <a>Logged in</a>
               </li>
